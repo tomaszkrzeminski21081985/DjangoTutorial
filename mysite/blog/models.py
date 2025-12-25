@@ -17,9 +17,9 @@ class Post(models.Model):
     author=models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
                              related_name='blog_posts')
-class Meta:
-    ordering=['-publish']
-    indexes=[models.Index(fields=['-publish'])]
+    class Meta:
+        ordering=['-publish']
+        indexes=[models.Index(fields=['-publish'])]
 
-def __str__(self):
-    return self.title    
+    def __str__(self):
+        return self.title    
