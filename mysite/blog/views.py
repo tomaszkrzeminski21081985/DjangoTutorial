@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.views.generic import ListView
 from .forms import EmailPostForm
+from django.core.mail import send_mail
 
 
 def post_list(request):
@@ -42,7 +43,6 @@ class PostListView(ListView):
    paginate_by=3
    template_name='blog/post/list.html'
 
-
 def post_share(request,post_id):
    post=get_object_or_404(
       Post,
@@ -50,17 +50,38 @@ def post_share(request,post_id):
       status=Post.Status.PUBLISHED
    )
    
+   sent=False
+
    if request.method=='POST':
         form=EmailPostForm(request.POST)
         if form.is_valid():
-            cd=form.changed_data
+            cd=form.cleaned_data
+            post_url=request.build_absolute_uri(
+                post.get_absolute_url()
+            )
+            subject=(
+                f"{cd['name']} ({cd['email']})"
+                f"poleca ci przeczytanie {post.title}"
+            )
+            message=(
+                f"Przeczytaj {post.title} pod adresem {post_url} \n\n"
+                f"komentarze {cd['name']} : {cd['comments']}"
+            )
+            send_mail(
+            subject=subject,
+            message=message,
+            from_email=None,
+            recipient_list=[cd['to']]
+            )
+            sent=True
    else:
       form=EmailPostForm()
-      return render(
+   return render(
           request,
           'blog/post/share.html',
           {
-              'post',post,
-              'form',form
+              'post':post,
+              'form':form,
+              'sent':sent
           }
       )          
