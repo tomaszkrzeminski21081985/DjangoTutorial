@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.conf import settings
-
+from taggit.managers import TaggableManager
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(status=Post.Status.PUBLISHED) 
@@ -11,7 +11,7 @@ class Post(models.Model):
     class Status(models.TextChoices):
         DRAFT='DF','Roboczy'
         PUBLISHED='PB','Opublikowany'
-
+    tags=TaggableManager()
     title=models.CharField(max_length=250)
     slug=models.SlugField(max_length=250,unique_for_date='publish')
     body=models.TextField()
