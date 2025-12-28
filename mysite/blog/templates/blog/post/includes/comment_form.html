@@ -1,0 +1,44 @@
+<h2>Dodaj nowy komentarz</h2>
+<form action="{% url "blog:post_comment" post.id %}" method="post">
+  <div class="row">
+  <div class="left">
+    {{ form.name.as_field_group }}
+  </div>
+  <div class="left">
+    {{ form.email.as_field_group }}
+  </div>
+  {{ form.body.as_field_group }}
+  {% csrf_token %}
+  <p><input type="submit" value="Dodaj komentarz"></p>
+  </div>
+  
+</form>
+
+<!-- <h2>Dodaj nowy komentarz</h2>
+<div>
+  <form action="{% url 'blog:post_comment' post.id %}" method="post">
+    {% csrf_token %}
+
+    <div class="row">
+        <div >
+            <label for="{{ form.name.id_for_label }}">Imię</label>
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+
+        <div >
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+    </div>
+
+    <div class="row">
+        <label for="{{ form.body.id_for_label }}">Komentarz</label>
+        {{ form.body }}
+        {{ form.body.errors }}
+    </div>
+
+    <p><input type="submit" value="Dodaj komentarz"></p>
+</form>
+</div> -->

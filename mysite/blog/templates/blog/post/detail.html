@@ -13,4 +13,22 @@
       Udostępnij post
     </a>
   </p>
+
+{% with comments.count as total_comments %}
+<h2>
+  {{total_comments}} komentarzy
+</h2>
+{% endwith %}
+{% for comment in comments  %}
+ <div class="comment">
+<p class="info">
+Komentarz {{forloop.counter}}  dodany przez {{comment.name}}
+{{comment.created}}
+</p>
+{{comment.body|linebreaks}}
+{% empty %}
+<p>Nie ma żadnych komentarzy</p>
+ </div>
+{% endfor %}
+{% include "blog/post/includes/comment_form.html" %}
 {% endblock %}
