@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ym)6+ym0r1--&of)!&^nu#5uz2a07i*07yiq*)5i@*@_x9a+m1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -36,10 +36,15 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'taggit',
     'blog.apps.BlogConfig',
 ]
+
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
